@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ scherm.naam }}</title>
+</head>
+<body>
+{% include 'header.html' %}
+<div id="container">
+    <div id="containerWeer">
+        <h1 id="location">{{ scherm.locatie }}</h1>
+        <div id="containerTop">
+            <p id="temp">{{ weer.temp }}</p>
+            <p id="celsiusSymbol"><b>°C</b></p>
+            <img id="weatherIMG" src="{{ weer.icon }}" alt=""/>
+        </div>
+        <p id="feels_like">Feels like: {{ weer.gevoelstemp }}°C</p>
+        <p id="condition">{{ weer.conditie }}</p>
+        <div id="gridRestInfo">
+            <p id="wind"><b>Wind: </b>{{ weer.wind_kmph }}kph - {{ weer.wind_directie }}</p>
+            {#            <p id="windDir"><b>Direction: </b>{{ weer.wind_directie }}</p>#}
+            <p id="rain"><b>Rain: </b>{{ weer.mm_regen }}mm</p>
+            <p id="uv"><b>UV: </b>{{ weer.uv }}</p>
+        </div>
+    </div>
+
+    <div id="containerTweet">
+        <div id="headerBar">
+            <img id="user_img" src="{% static 'admin/img/nslogo.svg' %}" alt="">
+            <div id="names">
+                <p id="username"><b>{{ tweet.username }}</b></p>
+                <p id="twitterName">@iiKaedin</p>
+            </div>
+        </div>
+        <p id="tweet_text">{{ tweet.text }}</p>
+        <p id="datetime">{{ tweet.datetime }}</p>
+    </div>
+
+    {#    <p style="display: none" id="countdown"></p>#}
+</div>
+</body>
+</html>
+<script>
+    let time = 30;// Time (in seconds) before next tweet comes
+    setInterval(function () {
+        if (time > 0) {
+            {#document.getElementById("countdown").innerHTML = "Next tweet in " + time + " seconds";#}
+            time--;
+        } else {
+            location.href = "{% url 'scherm_activeren' scherm.id %}"; // Reload page with new tweet
+        }
+    }, 1000)
+</script>
+<style>
+
+    {% if show_weather %}
+        #containerTweet {
+            display: none;
+        }
+    {% else %}
+        #containerWeer {
+            display: none;
+        }
+    {% endif %}
+
+
+    #containerTweet {
+        padding: 30px;
+        border-radius: 10px;
+        color: black;
+        background: white;
+    }
+
+    #location{
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+
+    #datetime {
+        font-size: smaller;
+    }
+
+    #tweet_text {
+        font-size: larger;
+        overflow-wrap: break-word;
+    }
+
+    div#names {
+        margin-left: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    #twitterName {
+        font-size: smaller;
+        opacity: 80%;
+    }
+
+    div#names p {
+        margin: 0;
+        padding: 0;
+    }
+
+    div#headerBar {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #user_img {
+        background: #FFC917;
+        padding: 10px;
+        border-radius: 100%;
+        width: 35px;
+        height: 35px;
+    }
+
+
+    #container {
+        width: 50%;
+        margin: 100px auto auto auto;
+    {#color: #003082;#}
+    }
+
+    #containerWeer p {
+        margin: 0;
+    }
+
+    #condition {
+        text-align: center;
+        font-size: xx-large;
+        font-weight: bold;
+    }
+
+    #containerWeer {
+        background: white;
+        padding: 50px;
+        border-radius: 10px;
+    }
+
+    #containerTop img {
+        width: 150px;
+        height: 150px;
+    }
+
+    #containerTop {
+        display: grid;
+        grid: "temp celsiusSymbol weatherIMG"1fr/
+        1fr auto 1fr;
+    }
+
+    #temp {
+        text-align: right;
+        font-size: 150px;
+        margin: 0;
+        padding: 0;
+    }
+
+    #feels_like {
+        font-size: large;
+    }
+
+    #gridRestInfo {
+        display: grid;
+        text-align: center;
+        grid: "wind rain uv"1fr/
+        1fr 1fr 1fr;
+        margin: 50px 0 0 0;
+    }
+
+    #celsiusSymbol {
+        margin-top: 100px;
+        padding-top: 30px;
+    }
+</style>

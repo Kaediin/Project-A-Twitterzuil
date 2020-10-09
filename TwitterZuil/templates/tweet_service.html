@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tweet plaatsen</title>
+</head>
+<body>
+{% include 'header.html' %}
+
+<div id="container">
+    <div id="containertweet">
+
+        <form id="formTweet" action="{% url 'send_tweet' %}" method="post">{% csrf_token %}
+            <input type="text" name="username" maxlength="30" placeholder="Gebruikersnaam (optioneel)" id="username">
+            <textarea name="content-tweet" id="editor" maxlength="140" placeholder="Voer hier uw bericht in (verplicht)"
+                      onkeyup="countChar(this)" required></textarea>
+            <p id="remaining-chars">Overige aantal karakters: 150</p>
+            <input type="submit" id="send-tweet-button" value="Tweet">
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+
+    function setRemainingChars(amount) {
+        document.getElementById('remaining-chars').innerText = 'Overige aantal karakters: ' + amount
+    }
+
+    function countChar(val) {
+        const len = val.value.length;
+        if (len > 140) {
+            val.value = val.value.substring(0, 140);
+        } else {
+            setRemainingChars(140 - len);
+        }
+    }
+</script>
+<style>
+    div#container {
+        margin-top: 100px;
+        display: flex;
+        justify-content: center;
+    }
+
+    #username {
+        padding: 5px;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    p, textarea {
+        margin: 0;
+        padding: 0;
+    }
+
+    p {
+        text-align: center;
+    }
+
+    textarea {
+        padding: 5px;
+        width: 100%;
+        resize: none;
+        height: 100px;
+    }
+
+    #send-tweet-button {
+        width: 100%;
+        margin-top: 10px;
+        border-radius: 50px;
+        background: cornflowerblue;
+        color: white;
+        border: none;
+        padding: 20px 0 20px 0;
+    }
+
+    #send-tweet-button:hover {
+        cursor: pointer;
+    }
+
+    div#containertweet {
+        width: 40%;
+    }
+</style>

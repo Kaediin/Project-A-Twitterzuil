@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Success!</title>
+</head>
+<body>
+{% include 'header.html' %}
+<div id="containerText">
+    <h1 id="timecounter"></h1>
+</div>
+</body>
+</html>
+<style>
+    div#containerText {
+        margin-top: 100px;
+        text-align: center;
+    }
+</style>
+<script>
+    let time = 3;
+    setInterval(function () {
+        if (time > 0) {
+            document.getElementById("timecounter").innerHTML = "{{ text }} In  "+ time +" seconden wordt u terug verwezen";
+            time--;
+        } else {
+            location.href = "{% url 'index' %}"; //this will redirect to your index
+        }
+    }, 1000)
+</script>

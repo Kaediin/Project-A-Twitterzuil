@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scherm kiezen</title>
+</head>
+<body>
+{% include 'header.html' %}
+
+<div id="container">
+
+    <div id="containerSchermen">
+        {% for scherm in schermen %}
+
+            <div class="perScherm">
+                <p class="schermID"><b>{{ scherm.id }}.</b></p>
+                <p class="schermNaam">{{ scherm.naam }}</p>
+                <p class="schermLocatie">{{ scherm.locatie }}</p>
+                <p class="activeer" onclick="activeerScherm({{ scherm.id }})">Activeer</p>
+            </div>
+
+        {% endfor %}
+
+    </div>
+</div>
+</body>
+</html>
+<script>
+    function activeerScherm(schermid) {
+        location.href = '{% url 'scherm_activeren' id=12345 %}'.replace(/12345/, schermid.toString());
+    }
+</script>
+<style>
+
+    .perScherm {
+        width: 50%;
+        border: #003082 3px solid;
+        border-radius: 10px;
+        align-items: center;
+        margin-bottom: 30px;
+        padding: 5px;
+        color: #003082;
+        display: grid;
+        grid: "schermID schermNaam schermLocatie activeer" 1fr/
+    1fr 1fr 1fr 1fr;
+    }
+
+    .activeer{
+        text-align: center;
+        padding: 10px;
+        border-radius: 10px;
+        border: 2px #003082 solid;
+        margin-right: 20px;
+        cursor: pointer;
+    }
+
+    .activeer:hover{
+        background: #003082;
+        color: white;
+        transition: 0.8s;
+    }
+
+    .schermID{
+        margin-left: 20px;
+    }
+
+    #containerSchermen {
+        display: flex;
+        margin-top: 100px;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+</style>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% include 'header.html' %}
+<div id="container">
+
+    <div id="containerMenu">
+        <div class="opties" onclick="tweet()">
+            <p>Plaats Tweet</p>
+        </div>
+        <div class="opties" onclick="reviewTweets()">
+            <p>Review tweets</p>
+        </div>
+        <div class="opties" onclick="schermWeergeven()">
+            <p>Scherm weergeven</p>
+        </div>
+        <div class="opties" onclick="moderatorAanmaken()">
+            <p>Voeg moderator toe</p>
+        </div>
+        <div class="opties" onclick="addScherm()">
+            <p>Voeg scherm toe</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+<script>
+    function tweet() {
+        location.href = '{% url 'tweet_page' %}';
+    }
+    function reviewTweets() {
+        location.href = '{% url 'aanmelden_moderator' %}';
+    }
+
+    function schermWeergeven() {
+        location.href = '{% url 'scherm_weergeven' %}'
+    }
+
+    function moderatorAanmaken(){
+        location.href = '{% url 'moderator_aanmaken' %}'
+    }
+
+    function addScherm() {
+        location.href = '{% url 'scherm-aanmaken' %}'
+    }
+</script>
+<style>
+
+    #containerMenu div {
+        text-align: center;
+        display: flex;
+        align-items: center;
+        border: 2px #003082 solid;
+        border-radius: 10px;
+    }
+
+    #container {
+        color: #003082;
+        width: 50%;
+        margin: 100px auto auto auto;
+    }
+
+    #containerMenu {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    p {
+        padding: 5px 20px 5px 20px;
+    }
+
+    h1 {
+        text-align: center;
+    }
+    .opties{
+        margin: 10px;
+    }
+
+    .opties:hover{
+        background: #003082;
+        color: white;
+        cursor: pointer;
+        transition: 0.8s;
+    }
+</style>

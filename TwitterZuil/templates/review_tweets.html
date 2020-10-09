@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Review Tweets</title>
+</head>
+<body>
+{% include 'header.html' %}
+
+<div id="containerNoTweets">
+    <h3>Er zijn momenteel geen tweets om te beoordelen. Kom later terug!</h3>
+</div>
+
+<div id="container">
+    <div id="containertweet">
+        <h3>Moderator: {{ moderator.fullname }}</h3>
+        <input type="text" name="username" value="{{ tweet.username }}" id="username" readonly>
+        <textarea id="editor" readonly>{{ tweet.text }}</textarea>
+        <textarea id="editorRemark" placeholder="Opmerking"></textarea>
+        <div id="containerAcceptReject">
+            <div id="rejectTweet" onclick="reviewTweet('reject')">
+                <p>Reject</p>
+            </div>
+            <div id="acceptTweet" onclick="reviewTweet('accept')">
+                <p>Accept</p>
+            </div>
+        </div>
+        <div id="hiddenForm" style="display: none">
+            <form id="scoreForm" action="{% url 'handle_review_tweet' %}" method="post">
+                {% csrf_token %}
+                <input type="text" id="" name="message" value="{{ tweet.text }}">
+                <input type="text" id="remark" name="remark" value="">
+                <input type="text" id="" name="moderator" value="{{ moderator.id }}">
+                <input type="text" id="" name="moderator_name" value="{{ moderator.fullname }}">
+                <input type="text" id="" name="moderator_password" value="{{ moderator.password }}">
+                <input type="text" id="tweet_id" name="tweet_id" value="{{ tweet.id }}">
+                <input type="text" id="review_score" name="review_score" value="">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+
+    function reviewTweet(review) {
+        document.getElementById('review_score').value = review;
+        remark = document.getElementById('editorRemark').value;
+        const form = document.getElementById('scoreForm');
+        console.log('test1');
+        if (review === 'reject' && remark !== '') {
+            document.getElementById('remark').value = remark;
+            form.submit();
+        } else if (review === 'accept') {
+            form.submit();
+        } else {
+            alert('Geef aub een opmerking bij het rejecten.')
+        }
+    }
+
+</script>
+<style>
+
+    {% if tweet == None %}
+
+        #container {
+            display: none;
+        }
+
+        #containerNoTweets {
+            margin-top: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #003082;
+        }
+
+    {% else %}
+
+        #containerNoTweets {
+            display: none;
+        }
+
+        div#container {
+            margin-top: 100px;
+            display: flex;
+            justify-content: center;
+        }
+
+        #username {
+            padding: 5px;
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+        p, textarea {
+            margin: 0;
+            padding: 0;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        div#containerAcceptReject {
+            display: flex;
+            flex-direction: row;
+        {#justify-content: space-between;#}
+        }
+
+        div#acceptTweet, div#rejectTweet {
+            width: 100%;
+            margin: 50px 5px 0 5px;
+            text-align: center;
+            padding: 10px 20px 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            align-items: center;
+        }
+
+        div#acceptTweet {
+            background: #FFC917;
+            color: white;
+        }
+
+        div#rejectTweet {
+            background: red;
+            color: white;
+        }
+
+        textarea {
+            padding: 5px;
+            width: 100%;
+            resize: none;
+            height: 100px;
+        }
+
+        div#containertweet {
+            width: 40%;
+            background: white;
+            padding: 100px;
+            border-radius: 10px;
+        }
+
+    {% endif %}
+
+
+</style>

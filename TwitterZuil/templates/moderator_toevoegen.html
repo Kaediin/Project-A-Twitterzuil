@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Moderator Toevoegen</title>
+</head>
+<body>
+{% include 'header.html' %}
+
+<div id="container">
+    <div id="formNewModerator">
+        <form action="{% url 'moderator_toevoegen' %}" method="post">
+        {% csrf_token %}
+            <input type="text" name="firstname_new_moderator" placeholder="Voornaam" required><br>
+            <input type="text" name="infix_new_moderator" placeholder="Tussenvoegsel (optioneel)"><br>
+            <input type="text" name="lastname_new_moderator" placeholder="Achternaam" required><br>
+            <input type="password" name="wachtwoord_new_moderator" placeholder="Wachtwoord" required><br>
+            <input type="password" name="masterPassword_new_moderator" placeholder="Master wachtwoord" required><br>
+            {% if messages %}
+                {% for message in messages %}
+                    <p id="message">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+            <input type="submit" value="Creëer">
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<style>
+
+    #container {
+        width: 40%;
+        margin: 100px auto auto auto;
+    }
+
+    #formNewModerator {
+        display: flex;
+        justify-content: center;
+        padding: 100px;
+        background: white;
+        border-radius: 10px;
+    }
+
+    input[type=text], input[type=password]{
+        width: 350px;
+        border: 2px solid #003082;
+        padding: 5px;
+        margin-bottom: 5px;
+    }
+
+    input[type=submit] {
+        width: 100%;
+        text-align: center;
+        margin-top: 5px;
+        padding: 10px 20px 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        align-items: center;
+        background: #FFC917;
+        color: white;
+        border: none;
+    }
+
+    #message{
+        font-size: xx-small;
+        color: red;
+        padding: 0;
+        margin: 2px 0 0 0;
+    }
+</style>
