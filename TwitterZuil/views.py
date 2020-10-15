@@ -105,8 +105,11 @@ def scherm_kiezen(request):
 
 def scherm_weergeven(request, id):
     scherm = db.getSchermById(id)
+    print('Scherm is opgehaald')
     tweet = db.getTweetsToDisplay(scherm)
+    print('Tweet is opgehaald')
     weer = weather.getWeather(scherm.locatie)
+    print('Weer is opgehaald')
     show_weather = tweet is None
 
     return render(request, 'scherm_weergeven.html', {

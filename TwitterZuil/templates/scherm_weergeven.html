@@ -42,14 +42,14 @@
 </body>
 </html>
 <script>
-    let time = 5;// Time (in seconds) before next tweet comes
+    let time = 30;// Time (in seconds) before next tweet comes
     setInterval(function () {
         if (time > 0) {
             {#document.getElementById("countdown").innerHTML = "Next tweet in " + time + " seconds";#}
             time--;
         } else {
-            location.reload()
-            {#location.href = "{% url 'scherm_activeren' scherm.id %}"; // Reload page with new tweet#}
+            {#location.reload()#}
+            location.href = "{% url 'scherm_activeren' scherm.id %}"; // Reload page with new tweet
         }
     }, 1000)
 </script>

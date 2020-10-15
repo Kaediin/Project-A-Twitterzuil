@@ -211,8 +211,10 @@ def getTweetsToDisplay(scherm):
         'select * from ns_berichten.tweet where id = (select id_tweet from ns_berichten.scherm_tweet where id_scherm is null order by id_tweet asc limit 1)')
     result = cursor.fetchone()
     close_db_connection()
+    print('Fetched results and closed db')
 
     if result and isTweetYoungerThan(result[3], 24):
+        print('Tweet is valid')
         tweet = Tweet(
             result[0],
             result[1],
@@ -225,10 +227,9 @@ def getTweetsToDisplay(scherm):
         query = sql.SQL('update ns_berichten.scherm_tweet set id_scherm = %s, first_view_date = %s where id_tweet = %s')
         data = (scherm.id, getCurrentDateTime(), tweet.id)
         execute_query(query, data)
+        print('Tweet is updated')
         return tweet
-    # elif result is None:
-    # while True:
-    #     result
+    return None
 
 
 def isTweetYoungerThan(creation_date_time, hours):
