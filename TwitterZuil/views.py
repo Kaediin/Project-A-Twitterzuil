@@ -151,4 +151,6 @@ def isCorrectPassword(password):
 
 
 def scherm_verversen(request, id):
-    return scherm_weergeven(request, id)
+    return render(request, 'scherm_verversen.html', {
+        'scherm_id': id
+    })
