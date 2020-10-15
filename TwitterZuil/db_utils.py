@@ -1,9 +1,12 @@
+from datetime import datetime
+
 import psycopg2
 from psycopg2 import sql
-from TwitterZuil.models import *
-from datetime import datetime
+
 import TwitterZuil.twitter_api as twitter
 import TwitterZuil.weather_api as weather
+from TwitterZuil.models import *
+
 connection = None
 cursor = None
 
@@ -11,11 +14,15 @@ cursor = None
 def open_db_connection():
     global connection, cursor
     try:
-        connection = psycopg2.connect(user="postgres",
-                                      password="Schouten2002",
-                                      host="127.0.0.1",
-                                      port="5432",
-                                      database="postgres")
+        # connection = psycopg2.connect(user="postgres",
+        #                               password="Schouten2002",
+        #                               host="127.0.0.1",
+        #                               port="5432",
+        #                               database="postgres")
+        # up.uses_netloc.append("postgres")
+        # url = up.urlparse(os.environ["postgres://inxcdtzn:IItRJjOeR5tr_DbJvfOpTYkZL9QMyYgg@rogue.db.elephantsql.com:5432/inxcdtzn "])
+
+        connection = psycopg2.connect("dbname='inxcdtzn' user='inxcdtzn' host='rogue.db.elephantsql.com' password='IItRJjOeR5tr_DbJvfOpTYkZL9QMyYgg'")
         cursor = connection.cursor()
     except (Exception, psycopg2.Error) as error:
         print("Error while connecting to PostgreSQL", error)
@@ -81,7 +88,8 @@ def getTweetToBeReviewed():
 def post_tweet(msg, tweet_id):
     twitter_tweet_id = str(twitter.tweet_message(msg))
     if twitter_tweet_id:
-        query = sql.SQL('update ns_berichten.tweet set is_reviewed = true, is_tweeted = true, twitter_tweet_id = %s where id = %s')
+        query = sql.SQL(
+            'update ns_berichten.tweet set is_reviewed = true, is_tweeted = true, twitter_tweet_id = %s where id = %s')
         data = (twitter_tweet_id, tweet_id)
 
         queryUpdate = sql.SQL('insert into ns_berichten.scherm_tweet values (%s, null, null)')
@@ -218,8 +226,8 @@ def getTweetsToDisplay(scherm):
         execute_query(query, data)
         return tweet
     # elif result is None:
-        # while True:
-        #     result
+    # while True:
+    #     result
 
 
 def isTweetYoungerThan(creation_date_time, hours):
