@@ -10,6 +10,7 @@ urlpatterns = [
     path('Scherm-Aanmaken', views.scherm_aanmaken, name='scherm-aanmaken'),
     path('Scherm-Toevoegen', views.scherm_toevoegen, name='scherm-toevoegen'),
     path('Scherm-Weergeven', views.scherm_kiezen, name='scherm_weergeven'),
+    path('Scherm-Verversen/<id>', views.scherm_verversen, name='scherm_verversen'),
     path('Scherm/<id>', views.scherm_weergeven, name='scherm_activeren'),
     path('Aanmaken-Moderator', views.moderator_aanmaken, name='moderator_aanmaken'),
     path('Toevoegen-Moderator', views.moderator_toevoegen, name='moderator_toevoegen'),

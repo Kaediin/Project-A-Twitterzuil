@@ -148,3 +148,20 @@ def moderator_toevoegen(request):
 
 def isCorrectPassword(password):
     return MASTERPASSWORD == password
+
+
+def scherm_verversen(request, id):
+    scherm = db.getSchermById(id)
+    print('Scherm is opgehaald')
+    tweet = db.getTweetsToDisplay(scherm)
+    print('Tweet is opgehaald')
+    weer = weather.getWeather(scherm.locatie)
+    print('Weer is opgehaald')
+    show_weather = tweet is None
+
+    return render(request, 'scherm_weergeven.html', {
+        'scherm': scherm,
+        'tweet': tweet,
+        'show_weather': show_weather,
+        'weer': weer,
+    })
