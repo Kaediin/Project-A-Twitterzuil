@@ -36,18 +36,22 @@
         <p id="tweet_text">{{ tweet.text }}</p>
         <p id="datetime">{{ tweet.datetime }}</p>
     </div>
+    <form style="display: none" id="hiddenform" action="{% url 'scherm_activeren' scherm.id %}" method="post">
+        {% csrf_token %}
+    </form>
 
     {#    <p style="display: none" id="countdown"></p>#}
 </div>
 </body>
 </html>
 <script>
-    let time = 30;// Time (in seconds) before next tweet comes
+    let time = 5;// Time (in seconds) before next tweet comes
     setInterval(function () {
         if (time > 0) {
             {#document.getElementById("countdown").innerHTML = "Next tweet in " + time + " seconds";#}
             time--;
         } else {
+            {#document.getElementById('hiddenForm').submit();#}
             {#location.reload()#}
             location.href = "{% url 'scherm_verversen' scherm.id %}"; // Reload page with new tweet
         }
