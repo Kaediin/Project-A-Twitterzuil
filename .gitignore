@@ -1,3 +1,4 @@
 Project_A/local_settings.py
 TwitterZuil/twitter_auth.py
 TwitterZuil/db_auth.py
+*.pyc
