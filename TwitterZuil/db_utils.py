@@ -6,6 +6,7 @@ from psycopg2 import sql
 import TwitterZuil.twitter_api as twitter
 import TwitterZuil.weather_api as weather
 from TwitterZuil.models import *
+import TwitterZuil.db_auth as db_auth
 
 connection = None
 cursor = None
@@ -22,7 +23,7 @@ def open_db_connection():
         # up.uses_netloc.append("postgres")
         # url = up.urlparse(os.environ["postgres://inxcdtzn:IItRJjOeR5tr_DbJvfOpTYkZL9QMyYgg@rogue.db.elephantsql.com:5432/inxcdtzn "])
 
-        connection = psycopg2.connect("dbname='inxcdtzn' user='inxcdtzn' host='rogue.db.elephantsql.com' password='IItRJjOeR5tr_DbJvfOpTYkZL9QMyYgg'")
+        connection = psycopg2.connect(f"dbname='{db_auth.name}' user='{db_auth.name}' host='{db_auth.host}' password='{db_auth.password}'")
         cursor = connection.cursor()
     except (Exception, psycopg2.Error) as error:
         print("Error while connecting to PostgreSQL", error)
