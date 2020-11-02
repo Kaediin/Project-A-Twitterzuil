@@ -23,7 +23,8 @@ def open_db_connection():
         # up.uses_netloc.append("postgres")
         # url = up.urlparse(os.environ["postgres://inxcdtzn:IItRJjOeR5tr_DbJvfOpTYkZL9QMyYgg@rogue.db.elephantsql.com:5432/inxcdtzn "])
 
-        connection = psycopg2.connect(f"dbname='{db_auth.name}' user='{db_auth.name}' host='{db_auth.host}' password='{db_auth.password}'")
+        connection = psycopg2.connect(
+            f"dbname='{db_auth.name}' user='{db_auth.name}' host='{db_auth.host}' password='{db_auth.password}'")
         cursor = connection.cursor()
     except (Exception, psycopg2.Error) as error:
         print("Error while connecting to PostgreSQL", error)
@@ -213,7 +214,7 @@ def getTweetsToDisplay(scherm):
     close_db_connection()
     print('Fetched results and closed db')
 
-    if result and isTweetYoungerThan(result[3], 24):
+    if result:
         print('Tweet is valid')
         tweet = Tweet(
             result[0],
@@ -230,14 +231,6 @@ def getTweetsToDisplay(scherm):
         print('Tweet is updated')
         return tweet
     return None
-
-
-def isTweetYoungerThan(creation_date_time, hours):
-    nowConverted = datetime.strptime(getCurrentDateTime(), "%Y-%m-%d %H:%M:%S")  # convert string to time
-    dateTimeDifference = nowConverted - creation_date_time
-    tweetAge = dateTimeDifference.total_seconds() / 3600
-
-    return tweetAge < hours
 
 
 def getCurrentDateTime():
